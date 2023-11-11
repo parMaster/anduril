@@ -43,5 +43,30 @@
 #define MIN_THERM_STEPDOWN 60  // lowest value it'll step down to
 #define THERM_FASTER_LEVEL (RAMP_SIZE-20)  // don't throttle back faster when high
 
+// save extra memory for USE_SMOOTH_STEPS
+#ifdef USE_VERSION_CHECK
+#undef USE_VERSION_CHECK
+#endif
+
+// this one needs more memory
+#define USE_SMOOTH_STEPS
+
+// my D4S overestimates temperature by 13C at 40C, so adjust for that
+#define THERM_CAL_OFFSET -13
+
+// off mode: high (2)
+// lockout: low (1)
+#define INDICATOR_LED_DEFAULT_MODE ((1<<2) + 2)
+
 // too big, turn off extra features
 #undef USE_TACTICAL_MODE
+
+// don't blink while ramping
+#ifdef BLINK_AT_RAMP_MIDDLE
+#undef BLINK_AT_RAMP_MIDDLE
+#endif
+
+// don't blink at the top of the ramp
+#ifdef BLINK_AT_RAMP_CEIL
+#undef BLINK_AT_RAMP_CEIL
+#endif
