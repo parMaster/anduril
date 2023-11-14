@@ -7,16 +7,37 @@
 // same as  the  BLF Q8, mostly
 #include "sofirn/blf-q8-t1616/anduril.h"
 
+#ifdef VOLTAGE_LOW
+#undef VOLTAGE_LOW
+#endif
+#define VOLTAGE_LOW 30 // 3.0V is low enough for li-ion
+
+#define HOLD_TIMEOUT 20
+#define RELEASE_TIMEOUT 18
+
+#undef B_TIMING_ON
+#define B_TIMING_ON B_PRESS_T // turn on when button is pressed, don't wait for release
+
+#undef MOON_TIMING_HINT // hint is unnecessary
+
 // voltage readings were a little high with the Q8 value
 #undef VOLTAGE_FUDGE_FACTOR
 #define VOLTAGE_FUDGE_FACTOR 5  // add 0.25V, not 0.35V
+
+// Button LED Indicator
 
 // off mode: high (2)
 // lockout: high (2)
 #ifdef INDICATOR_LED_DEFAULT_MODE
 #undef INDICATOR_LED_DEFAULT_MODE
 #endif
-#define INDICATOR_LED_DEFAULT_MODE ((2<<2) + 2)
+#define INDICATOR_LED_DEFAULT_MODE ((2<<2) + 2) // always high
+
+// DEFAULT_LEVEL is when Indicator LED turns on, so it should be = 1x7135 ramp ceiling (MAX_1x7135)
+#ifdef DEFAULT_LEVEL
+#undef DEFAULT_LEVEL
+#endif
+#define DEFAULT_LEVEL MAX_1x7135
 
 // don't blink during the ramp; the button LED brightness is sufficient
 // to indicate which power channel(s) are being used
