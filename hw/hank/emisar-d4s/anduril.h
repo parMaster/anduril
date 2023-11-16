@@ -6,6 +6,19 @@
 #include "hank/emisar-d4s/hwdef.h"
 #include "hank/anduril.h"
 
+#ifdef VOLTAGE_LOW
+#undef VOLTAGE_LOW
+#endif
+#define VOLTAGE_LOW 30 // 3.0V is low enough for li-ion
+
+#define HOLD_TIMEOUT 20
+#define RELEASE_TIMEOUT 18
+
+#undef B_TIMING_ON
+#define B_TIMING_ON B_PRESS_T // turn on when button is pressed, don't wait for release
+
+#undef MOON_TIMING_HINT // hint is unnecessary
+
 // the button lights up (on some models)
 #define USE_INDICATOR_LED
 // the aux LEDs are behind the main LEDs
@@ -70,3 +83,8 @@
 #ifdef BLINK_AT_RAMP_CEIL
 #undef BLINK_AT_RAMP_CEIL
 #endif
+
+#undef HALFSPEED_LEVEL
+#define HALFSPEED_LEVEL 30
+#undef QUARTERSPEED_LEVEL
+#define QUARTERSPEED_LEVEL 10
